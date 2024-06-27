@@ -19,6 +19,9 @@ on:
   #       required: true
   #       type: string
 
+env:
+  component-library: ${{ secrets.COMPONENT_LIBRARY_CHROMATIC }}
+
 jobs:
   chromatic:
     name: Run Chromatic checks for all apps
