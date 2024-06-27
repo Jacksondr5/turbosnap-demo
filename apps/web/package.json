@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build-storybook": "storybook build --stats-json",
     "dev": "next dev --turbo",
     "lint": "next lint",
     "start": "next start",
+    "storybook": "storybook dev -p 6006",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -16,13 +18,24 @@
     "react-dom": "19.0.0-rc-f994737d14-20240522"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.5.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@storybook/addon-essentials": "^8.1.11",
+    "@storybook/addon-interactions": "^8.1.11",
+    "@storybook/addon-links": "^8.1.11",
+    "@storybook/addon-onboarding": "^8.1.11",
+    "@storybook/blocks": "^8.1.11",
+    "@storybook/nextjs": "^8.1.11",
+    "@storybook/react": "^8.1.11",
+    "@storybook/test": "^8.1.11",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "15.0.0-rc.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "storybook": "^8.1.11",
     "typescript": "^5"
   }
 }
