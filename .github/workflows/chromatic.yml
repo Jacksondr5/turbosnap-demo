@@ -56,6 +56,6 @@ jobs:
         with:
           exitOnceUploaded: true
           onlyChanged: true
-          projectToken: ${{ matrix.app.chromatic-token }}
+          projectToken: ${{ env[matrix.app.name] }}
           storybookBuildDir: storybook-static
           workingDir: ${{ matrix.app.path }}
