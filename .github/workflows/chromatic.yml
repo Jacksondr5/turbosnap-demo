@@ -4,20 +4,6 @@ on:
   pull_request:
     branches:
       - main
-  # workflow_call:
-  #   inputs:
-  #     app-name:
-  #       description: "Name of the app"
-  #       required: true
-  #       type: string
-  #     chromatic-token:
-  #       description: "Chromatic project token"
-  #       required: true
-  #       type: string
-  #     path:
-  #       description: "Working directory of the project"
-  #       required: true
-  #       type: string
 
 env:
   component-library: ${{ secrets.COMPONENT_LIBRARY_CHROMATIC }}
