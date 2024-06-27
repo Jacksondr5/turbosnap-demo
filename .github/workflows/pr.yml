@@ -46,4 +46,4 @@ jobs:
     uses: ./.github/workflows/chromatic.yml
     with:
       chromatic-token: ${{ github.env[matrix.app] }}
-      project-working-directory: ${{ matrix.app }}
+      project-working-directory: "apps/${{ matrix.app }}"
