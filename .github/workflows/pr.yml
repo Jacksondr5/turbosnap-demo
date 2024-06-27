@@ -40,11 +40,10 @@ jobs:
 
   chromatic:
     name: Run Chromatic checks for all apps
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         app: [component-library]
     uses: ./.github/workflows/chromatic.yml
     with:
-      chromatic-token: ${{ env.component-library }}
+      chromatic-token: ${{ github.env[matrix.app] }}
       project-working-directory: ${{ matrix.app }}
