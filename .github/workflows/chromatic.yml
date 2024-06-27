@@ -46,7 +46,7 @@ jobs:
           run_install: true
 
       - name: Build storybook
-        run: pnpm build-storybook --filter ${{ matrix.app.app-name }}
+        run: pnpm build-storybook --filter ${{ matrix.app.name }}
 
       - name: Run Chromatic
         uses: chromaui/action@latest
