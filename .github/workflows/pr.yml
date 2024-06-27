@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-env:
-  component-library: ${{secrets.COMPONENT_LIBRARY_CHROMATIC}}
-
 jobs:
   validate-pr:
     name: Validate PR
@@ -42,8 +39,12 @@ jobs:
     name: Run Chromatic checks for all apps
     strategy:
       matrix:
-        app: [component-library]
+        app:
+          - name: component-library
+            chromatic-token: ${{ github.secrets.COMPONENT_LIBRARY_CHROMATIC }}
+            path: apps/component-library
     uses: ./.github/workflows/chromatic.yml
     with:
+      app-name: ${{ matrix.app }}
       chromatic-token: ${{ github.env[matrix.app] }}
-      project-working-directory: "apps/${{ matrix.app }}"
+      path: "apps/${{ matrix.app }}"

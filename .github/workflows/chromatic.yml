@@ -3,14 +3,18 @@ name: Chromatic
 on:
   workflow_call:
     inputs:
+      app-name:
+        description: "Name of the app"
+        required: true
+        type: string
       chromatic-token:
         description: "Chromatic project token"
-        type: string
         required: true
-      project-working-directory:
+        type: string
+      path:
         description: "Working directory of the project"
-        type: string
         required: true
+        type: string
 
 jobs:
   chromatic:
@@ -33,7 +37,7 @@ jobs:
           run_install: true
 
       - name: Build storybook
-        run: pnpm build-storybook --filter ${{ inputs.project-working-directory }}
+        run: pnpm build-storybook --filter ${{ inputs.app-name }}
 
       - name: Run Chromatic
         uses: chromaui/action@latest
@@ -42,4 +46,4 @@ jobs:
           onlyChanged: true
           projectToken: ${{ inputs.chromatic-token }}
           storybookBuildDir: storybook-static
-          workingDir: ${{ inputs.project-working-directory }}
+          workingDir: ${{ inputs.path }}
