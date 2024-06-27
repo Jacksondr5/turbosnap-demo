@@ -45,6 +45,6 @@ jobs:
             path: apps/component-library
     uses: ./.github/workflows/chromatic.yml
     with:
-      app-name: ${{ matrix.app }}
-      chromatic-token: ${{ github.env[matrix.app] }}
-      path: "apps/${{ matrix.app }}"
+      app-name: ${{ matrix.app.name }}
+      chromatic-token: ${{ matrix.app.chromatic-token }}
+      path: "apps/${{ matrix.app.path }}"
