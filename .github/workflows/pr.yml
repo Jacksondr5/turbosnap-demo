@@ -38,16 +38,16 @@ jobs:
       - name: Check formatting
         run: pnpm format:check
 
-  chromatic:
-    name: Run Chromatic checks for all apps
-    strategy:
-      matrix:
-        app:
-          - name: component-library
-            chromatic-token: ${{ github.env.component-library }}
-            path: apps/component-library
-    uses: ./.github/workflows/chromatic.yml
-    with:
-      app-name: ${{ matrix.app.name }}
-      chromatic-token: ${{ matrix.app.chromatic-token }}
-      path: "${{ matrix.app.path }}"
+  # chromatic:
+  #   name: Run Chromatic checks for all apps
+  #   strategy:
+  #     matrix:
+  #       app:
+  #         - name: component-library
+  #           chromatic-token: ${{ github.env.component-library }}
+  #           path: apps/component-library
+  #   uses: ./.github/workflows/chromatic.yml
+  #   with:
+  #     app-name: ${{ matrix.app.name }}
+  #     chromatic-token: ${{ matrix.app.chromatic-token }}
+  #     path: "${{ matrix.app.path }}"

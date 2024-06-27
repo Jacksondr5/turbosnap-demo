@@ -1,24 +1,33 @@
 name: Chromatic
 
 on:
-  workflow_call:
-    inputs:
-      app-name:
-        description: "Name of the app"
-        required: true
-        type: string
-      chromatic-token:
-        description: "Chromatic project token"
-        required: true
-        type: string
-      path:
-        description: "Working directory of the project"
-        required: true
-        type: string
+  pull_request:
+    branches:
+      - main
+  # workflow_call:
+  #   inputs:
+  #     app-name:
+  #       description: "Name of the app"
+  #       required: true
+  #       type: string
+  #     chromatic-token:
+  #       description: "Chromatic project token"
+  #       required: true
+  #       type: string
+  #     path:
+  #       description: "Working directory of the project"
+  #       required: true
+  #       type: string
 
 jobs:
   chromatic:
-    name: Chromatic
+    name: Run Chromatic checks for all apps
+    strategy:
+      matrix:
+        app:
+          - name: component-library
+            chromatic-token: ${{ github.env.component-library }}
+            path: apps/component-library
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -37,13 +46,13 @@ jobs:
           run_install: true
 
       - name: Build storybook
-        run: pnpm build-storybook --filter ${{ inputs.app-name }}
+        run: pnpm build-storybook --filter ${{ matrix.app.app-name }}
 
       - name: Run Chromatic
         uses: chromaui/action@latest
         with:
           exitOnceUploaded: true
           onlyChanged: true
-          projectToken: ${{ inputs.chromatic-token }}
+          projectToken: ${{ matrix.app.chromatic-token }}
           storybookBuildDir: storybook-static
-          workingDir: ${{ inputs.path }}
+          workingDir: ${{ matrix.app.path }}
