@@ -1,0 +1,45 @@
+name: Chromatic
+
+on:
+  workflow_call:
+    inputs:
+      chromatic-token:
+        description: "Chromatic project token"
+        type: string
+        required: true
+      project-working-directory:
+        description: "Working directory of the project"
+        type: string
+        required: true
+
+jobs:
+  chromatic:
+    name: Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          run_install: true
+
+      - name: Build storybook
+        run: pnpm build-storybook --filter ${{ inputs.project-working-directory }}
+
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          exitOnceUploaded: true
+          onlyChanged: true
+          projectToken: ${{ inputs.chromatic-token }}
+          storybookBuildDir: storybook-static
+          workingDir: ${{ inputs.project-working-directory }}

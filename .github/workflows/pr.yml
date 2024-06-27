@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  component-library: ${{secrets.COMPONENT_LIBRARY_CHROMATIC}}
+
 jobs:
   validate-pr:
     name: Validate PR
@@ -34,3 +37,14 @@ jobs:
 
       - name: Check formatting
         run: pnpm format:check
+
+  chromatic:
+    name: Run Chromatic checks for all apps
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [component-library]
+    uses: ./.github/workflows/chromatic.yml
+    with:
+      chromatic-token: ${{ env.component-library }}
+      project-working-directory: ${{ matrix.app }}
