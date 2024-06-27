@@ -1,0 +1,47 @@
+name: Chromatic
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  component-library: ${{ secrets.COMPONENT_LIBRARY_CHROMATIC }}
+
+jobs:
+  chromatic:
+    name: Run Chromatic checks for all apps
+    strategy:
+      matrix:
+        app:
+          - name: component-library
+            chromatic-token: ${{ github.env.component-library }}
+            path: apps/component-library
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          run_install: true
+
+      - name: Build storybook
+        run: pnpm build-storybook --filter ${{ matrix.app.name }}
+
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          exitOnceUploaded: true
+          onlyChanged: true
+          projectToken: ${{ env[matrix.app.name] }}
+          storybookBuildDir: storybook-static
+          workingDir: ${{ matrix.app.path }}
