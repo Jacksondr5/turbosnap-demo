@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  component-library: ${{ secrets.COMPONENT_LIBRARY_CHROMATIC }}
+
 jobs:
   validate-pr:
     name: Validate PR
@@ -41,7 +44,7 @@ jobs:
       matrix:
         app:
           - name: component-library
-            chromatic-token: ${{ github.secrets.COMPONENT_LIBRARY_CHROMATIC }}
+            chromatic-token: ${{ github.env.component-library }}
             path: apps/component-library
     uses: ./.github/workflows/chromatic.yml
     with:
