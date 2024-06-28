@@ -7,7 +7,7 @@ on:
 
 env:
   component-library: ${{ secrets.COMPONENT_LIBRARY_CHROMATIC }}
-  website: ${{ secrets.WEB_CHROMATIC }}
+  web: ${{ secrets.WEB_CHROMATIC }}
 
 jobs:
   chromatic:
@@ -18,6 +18,9 @@ jobs:
           - name: component-library
             chromatic-token: ${{ github.env.component-library }}
             path: apps/component-library
+          - name: web
+            chromatic-token: ${{ github.env.web }}
+            path: apps/web
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
