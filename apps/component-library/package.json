@@ -2,8 +2,8 @@
   "name": "component-library",
   "version": "0.1.0",
   "private": true,
-  "main": "lib/src/index.js",
-  "types": "lib/src/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "tsc",
     "build-storybook": "storybook build --stats-json",
