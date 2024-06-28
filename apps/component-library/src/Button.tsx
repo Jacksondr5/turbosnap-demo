@@ -1,5 +1,4 @@
 import React from "react";
-import "./button.css";
 
 export interface ButtonProps {
   /**
@@ -34,16 +33,54 @@ export const Button = ({
   label,
   ...props
 }: ButtonProps) => {
-  const mode = primary
-    ? "storybook-button--primary"
-    : "storybook-button--secondary";
+  const modeStyles = primary
+    ? {
+        color: "white",
+        backgroundColor: "#1ea7fd",
+      }
+    : {
+        color: "#333",
+        backgroundColor: "transparent",
+        boxShadow: "rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset",
+      };
+  const finalBackgroundColor = backgroundColor || modeStyles.backgroundColor;
+  let sizeStyles = {};
+  switch (size) {
+    case "small":
+      sizeStyles = {
+        fontSize: "12px",
+        padding: "10px 16px",
+      };
+      break;
+    case "medium":
+      sizeStyles = {
+        fontSize: "14px",
+        padding: "11px 20px",
+      };
+      break;
+    case "large":
+      sizeStyles = {
+        fontSize: "16px",
+        padding: "12px 24px",
+      };
+      break;
+  }
   return (
     <button
       type="button"
-      className={["storybook-button", `storybook-button--${size}`, mode].join(
-        " ",
-      )}
-      style={{ backgroundColor }}
+      style={{
+        ...modeStyles,
+        ...sizeStyles,
+        backgroundColor: finalBackgroundColor,
+        fontFamily:
+          '"Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
+        fontWeight: "700",
+        border: "0",
+        borderRadius: "3em",
+        cursor: "pointer",
+        display: "inline-block",
+        lineHeight: "1",
+      }}
       {...props}
     >
       {label}
